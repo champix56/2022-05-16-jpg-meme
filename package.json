@@ -1,0 +1,23 @@
+{
+  "name": "2022-05-16-jpg-meme",
+  "version": "1.0.0",
+  "description": "Projet de formation",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "lite-server": "2.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/champix56/2022-05-16-jpg-meme.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/champix56/2022-05-16-jpg-meme/issues"
+  },
+  "homepage": "https://github.com/champix56/2022-05-16-jpg-meme#readme"
+}
