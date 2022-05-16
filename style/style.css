@@ -6,57 +6,56 @@ header {
   font-weight: 900;
   font-size: xx-large;
   height: 45px;
-
 }
 #h-dot {
   color: black;
 }
-#h-js{
-    font-style: italic;
-    color: orange;
+#h-js {
+  font-style: italic;
+  color: orange;
 }
 /* 
     section du wrapper 
 */
-#wrapper{
-    height: calc(90vh - 50px);
-    display: flex;
+#wrapper {
+  height: calc(90vh - 50px);
+  display: flex;
 }
-#wrapper>div:nth-child(1){
-    flex-grow:1;
+#wrapper > div:nth-child(1) {
+  flex-grow: 1;
 }
 /* 
     section footer
 */
-footer{
-    text-align: center;
+footer {
+  text-align: center;
 }
 /* 
     form
 */
-#editor{
-    padding: 5px 20px
+#editor {
+  padding: 5px 20px;
 }
-.center-big{
-    text-align: center;
+.center-big {
+  text-align: center;
 }
-.center-big input{
-    width:80%;
-    height:35px;
+.center-big input {
+  width: 80%;
+  height: 35px;
 }
 /* cols-2 */
-.col-2{
-     display: flex;
-    justify-content: space-between;
+.col-2 {
+  display: flex;
+  justify-content: space-between;
 }
-.col-2>*{
-    flex:1;
-    padding:5px;
-    text-align: center;
+.col-2 > * {
+  flex: 1;
+  padding: 5px;
+  text-align: center;
 }
-.col-2>* input{
-    width: 100px;
+.col-2 > * input {
+  width: 100px;
 }
-.col-2>* button{
-    width: 80%;
+.col-2 > * button {
+  width: 80%;
 }
