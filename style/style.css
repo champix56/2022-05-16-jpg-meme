@@ -59,3 +59,12 @@ footer {
 .col-2 > * button {
   width: 80%;
 }
+/* 
+    svg
+*/
+#wrapper>#viewer{
+    text-align: center;
+}
+#wrapper svg{
+    height: 100%;
+}
