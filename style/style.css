@@ -57,3 +57,6 @@ footer{
 .col-2>* input{
     width: 100px;
 }
+.col-2>* button{
+    width: 80%;
+}
