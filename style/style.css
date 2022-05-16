@@ -1,0 +1,26 @@
+/* 
+    section header
+*/
+header {
+  color: grey;
+  font-weight: 900;
+  font-size: xx-large;
+
+}
+#h-dot {
+  color: black;
+}
+#h-js{
+    font-style: italic;
+    color: orange;
+}
+/* 
+    section du wrapper 
+*/
+#wrapper{
+    height:90vh;
+    display: flex;
+}
+#wrapper>div:nth-child(1){
+    flex-grow:1;
+}
