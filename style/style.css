@@ -5,6 +5,7 @@ header {
   color: grey;
   font-weight: 900;
   font-size: xx-large;
+  height: 45px;
 
 }
 #h-dot {
@@ -18,9 +19,15 @@ header {
     section du wrapper 
 */
 #wrapper{
-    height:90vh;
+    height: calc(90vh - 50px);
     display: flex;
 }
 #wrapper>div:nth-child(1){
     flex-grow:1;
+}
+/* 
+    section footer
+*/
+footer{
+    text-align: center;
 }
