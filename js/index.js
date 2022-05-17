@@ -3,14 +3,60 @@
  */
 var meme;
 var nodeSvg;
+var images = [];
 function initJs() {
+    loadImages();
   document.querySelector("footer").innerHTML = "Orsys &copy; 2022";
   meme = new Meme(renderSvg);
   nodeSvg = document.querySelector("svg");
   addFormUpdateEvent(meme);
 }
 document.addEventListener("DOMContentLoaded", initJs);
+/**
+ * remplissage du select du form
+ * @param {array<Images>} images liste d'image provennant du REST /images 
+ */
+function fillSelectImage(images){
+    var select=document.forms['meme-editor']['image'];
+    select.childNodes.forEach(function(e){e.remove()});
+    images.forEach(function(element,index,liste){
+        var opt=document.createElement('option');
+        opt.value=element.id;
+        opt.innerHTML=element.titre;
+        select.append(opt);
+    });
+}
+/**
+ * chargement de la liste d'images
+ */
+function loadImages() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://localhost:5679/images");
+  xhr.setRequestHeader("Accept", "application/json");
 
+  xhr.onreadystatechange = function (evt) {
+    //   gestion de fin d'achevement de recuperation de ressource
+    if (evt.target.readyState < XMLHttpRequest.DONE) {
+      return;
+    }
+    //gestion d'erreur
+    if (evt.target.status >= 400) {
+      console.log("erreur de requete", xhr.status);
+      return;
+    }
+    //traitement
+    //images=JSON.parse(evt.target.response);
+    //console.trace(images);
+    fillSelectImage(JSON.parse(evt.target.response));
+  };
+  xhr.send();
+}
+
+/**
+ * Fonction de render svg d'un meme
+ * @param {array} argsCaller tableaux des agrs fournit par le parent
+ * @param {Meme} meme instance du meme afficher
+ */
 function renderSvg(argsCaller, meme) {
   var nodeSvg = argsCaller[0];
   nodeSvg.getAttributeNode("viewBox").value =
@@ -36,14 +82,17 @@ function renderSvg(argsCaller, meme) {
   text.setAttributeNode(a);*/
 
   //moddif de la composante de style css en igne de la balise
-    text.style.fontWeight=meme.fontWeight;
+  text.style.fontWeight = meme.fontWeight;
   //modif direct de la value d'un attribut existant
   text.setAttribute("fill", meme.color);
   text.setAttribute("font-style", meme.italic ? "italic" : "normal");
   text.setAttribute("font-size", meme.fontSize);
   text.innerHTML = meme.text;
 }
-
+/**
+ * fonction d'ajout des event de changements du formulaire
+ * @param {Meme} meme
+ */
 function addFormUpdateEvent(meme) {
   var f = document.forms["meme-editor"];
   f.addEventListener("submit", function (evt) {
