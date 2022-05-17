@@ -1,29 +1,30 @@
 {
-    "memes":[
+    "memes": [
         {
-            "id":0,
-            "text":"1er meme",
-            "x":100,
-            "y":100,
-            "color":"#ACF0BE",
-            "fontWeight":"900",
-            "fontSize":40,
-            "italic":true,
-            "underline":false,
-            "imageId":0
+            "id": 0,
+            "text": "1er meme",
+            "x": 100,
+            "y": 100,
+            "color": "#ACF0BE",
+            "fontWeight": "900",
+            "fontSize": 40,
+            "italic": true,
+            "underline": false,
+            "imageId": 0
         }
     ],
-    "images":[
+    "images": [
         {
-            "id":0,
-            "url":"/img/meme/futurama.webp",
-            "w":704,
-            "h":396
+            "id": 0,
+            "url": "/img/meme/futurama.webp",
+            "w": 704,
+            "h": 396,
+            "titre":"futurama"
         }
     ],
-    "copyright":{
-        "societe":"Orsys",
-        "annee":2022,
-        "auteur":"Desorbaix"
+    "copyright": {
+        "societe": "Orsys",
+        "annee": 2022,
+        "auteur": "Desorbaix"
     }
 }
