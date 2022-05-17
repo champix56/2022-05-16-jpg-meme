@@ -5,26 +5,28 @@ var meme;
 var nodeSvg;
 var images = [];
 function initJs() {
-    loadImages();
+  loadImages();
   document.querySelector("footer").innerHTML = "Orsys &copy; 2022";
-  meme = new Meme(renderSvg);
+  meme = new Meme(renderSvg, saveMeme);
   nodeSvg = document.querySelector("svg");
   addFormUpdateEvent(meme);
 }
 document.addEventListener("DOMContentLoaded", initJs);
 /**
  * remplissage du select du form
- * @param {array<Images>} images liste d'image provennant du REST /images 
+ * @param {array<Images>} images liste d'image provennant du REST /images
  */
-function fillSelectImage(images){
-    var select=document.forms['meme-editor']['image'];
-    select.childNodes.forEach(function(e){e.remove()});
-    images.forEach(function(element,index,liste){
-        var opt=document.createElement('option');
-        opt.value=element.id;
-        opt.innerHTML=element.titre;
-        select.append(opt);
-    });
+function fillSelectImage(images) {
+  var select = document.forms["meme-editor"]["image"];
+  select.childNodes.forEach(function (e) {
+    e.remove();
+  });
+  images.forEach(function (element, index, liste) {
+    var opt = document.createElement("option");
+    opt.value = element.id;
+    opt.innerHTML = element.titre;
+    select.append(opt);
+  });
 }
 /**
  * chargement de la liste d'images
@@ -45,13 +47,35 @@ function loadImages() {
       return;
     }
     //traitement
-    //images=JSON.parse(evt.target.response);
+    images = JSON.parse(evt.target.response);
     //console.trace(images);
-    fillSelectImage(JSON.parse(evt.target.response));
+    fillSelectImage(images);
   };
   xhr.send();
 }
+/**
+ * chargement de la liste d'images
+ */
+function saveMeme(meme) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://localhost:5679/memes");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Accept", "application/json");
 
+  xhr.onreadystatechange = function (evt) {
+    //   gestion de fin d'achevement de recuperation de ressource
+    if (evt.target.readyState < XMLHttpRequest.DONE) {
+      return;
+    }
+    //gestion d'erreur
+    if (evt.target.status >= 400) {
+      console.log("erreur de requete", xhr.status);
+      return;
+    }
+    console.log(JSON.parse(evt.target.response));
+  };
+  xhr.send(JSON.stringify(meme));
+}
 /**
  * Fonction de render svg d'un meme
  * @param {array} argsCaller tableaux des agrs fournit par le parent
@@ -59,12 +83,14 @@ function loadImages() {
  */
 function renderSvg(argsCaller, meme) {
   var nodeSvg = argsCaller[0];
-  nodeSvg.getAttributeNode("viewBox").value =
-    "0 0 " + meme.image.w + " " + meme.image.h;
+  var img = images.find(function (elemImg) {
+    return elemImg.id === meme.imageId;
+  });
+  nodeSvg.getAttributeNode("viewBox").value = "0 0 " + img.w + " " + img.h;
   /*image*/
   var image = nodeSvg.querySelector("image");
   image.getAttributeNodeNS("http://www.w3.org/1999/xlink", "href").value =
-    meme.image.url;
+    img.url;
   /*text*/
   var text = nodeSvg.querySelector("text");
   // recuperation d'un objet attribut
@@ -99,9 +125,20 @@ function addFormUpdateEvent(meme) {
     evt.preventDefault();
     console.log("soumission du formulaire");
     //enregistrement  REST
+    meme.save();
+    f.reset();
   });
+  f.addEventListener('reset',function(evt){
+      
+    meme.clear();
+    meme.render(nodeSvg);
+  })
   f["text"].addEventListener("change", function (evt) {
     meme.text = evt.target.value;
+    meme.render(nodeSvg);
+  });
+  f["image"].addEventListener("change", function (evt) {
+    meme.imageId = Number(evt.target.value);
     meme.render(nodeSvg);
   });
   f["color"].addEventListener("change", function (evt) {
