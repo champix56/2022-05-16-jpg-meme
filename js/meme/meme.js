@@ -6,12 +6,13 @@ function Meme(renderCallback) {
   this.underline = true;
   this.italic = false;
   this.color = "#ACACAC";
-  this.image = {
-    id: 0,
-    url: "/img/meme/futurama.webp",
-    w: 760,
-    h: 364,
-  };
+  this.imageId=0;
+  // this.image = {
+  //   id: 0,
+  //   url: "/img/meme/futurama.webp",
+  //   w: 760,
+  //   h: 364,
+  // };
   this.render = function(){ 
     return renderCallback(arguments,this);
   }
