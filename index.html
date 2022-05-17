@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" >
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,9 +10,8 @@
       media="screen"
       href="/node_modules/bootstrap/dist/css/bootstrap.css"
     />
-  
-    <link rel="stylesheet" href="style/style.css" />
 
+    <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
     <div id="main">
@@ -49,7 +48,13 @@
           </svg>
         </div>
         <div id="editor">
-          <form name="meme-editor" >
+          <form name="meme-editor">
+            <h2>Edition</h2>
+            <label for="meme-image"><h3>Image</h3></label>
+            <div style="text-align: center">
+              <select id="meme-image" name="image"></select>
+            </div>
+            <hr />
             <label for="meme-text"><h3>Texte</h3></label><br />
             <input type="text" id="meme-text" name="text" />
             <hr />
@@ -100,14 +105,10 @@
             <hr />
             <div class="col-2">
               <div>
-                <button type="reset" class="btn btn-warning">
-                  reset
-                </button>
+                <button type="reset" class="btn btn-warning">reset</button>
               </div>
               <div>
-                <button  type="submit" class="btn btn-primary">
-                  save
-                </button>
+                <button type="submit" class="btn btn-primary">save</button>
               </div>
             </div>
           </form>
@@ -116,7 +117,7 @@
       <footer>Desorbaix &copy; 2022</footer>
     </div>
     <script src="/node_modules/jquery/dist/jquery.js" async></script>
-    <script src="/js/meme/meme.js" ></script>
-    <script src="/js/index.js" ></script>
+    <script src="/js/meme/meme.js"></script>
+    <script src="/js/index.js"></script>
   </body>
 </html>
