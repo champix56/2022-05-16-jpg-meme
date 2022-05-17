@@ -12,5 +12,7 @@ function Meme(renderCallback) {
     w: 760,
     h: 364,
   };
-  this.render = renderCallback;
+  this.render = function(){ 
+    return renderCallback(arguments,this);
+  }
 }
