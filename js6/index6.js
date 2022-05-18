@@ -1,1 +1,1 @@
-import './Meme6.js'
+import {memeGenerator} from './MemeHandler.js'

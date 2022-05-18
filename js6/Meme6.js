@@ -1,6 +1,7 @@
+import { REST_ADR } from "./config/config.js";
 import { Image } from "./Image.js";
 
-class Meme {
+export class Meme {
   #id;
   #text;
   #dimension;
@@ -100,6 +101,7 @@ class Meme {
     if (newVal instanceof Date) this.#timestamp = newVal;
     else this.#timestamp = new Date();
   }
+
   constructor(jsonStr) {
     if (undefined !== jsonStr && typeof jsonStr === "string") {
       this.#setFormJson(jsonStr);
@@ -144,7 +146,7 @@ class Meme {
   #setFormJson(jsonStr) {
     const o = JSON.parse(jsonStr);
     this.#id = o.id;
-    this.#dimension={x:0,y:0};
+    this.#dimension = { x: 0, y: 0 };
     this.x = o.x;
     this.y = o.y;
     this.imageId = o.imageId;
@@ -155,9 +157,49 @@ class Meme {
     this.italic = o.italic;
     this.underline = o.underline;
   }
+  static newFormJsonObject(obj) {
+    const memeOut = new Meme();
+    memeOut.#id = obj.id;
+    memeOut.#dimension = { x: obj.x, y: obj.y };
+    memeOut.imageId = obj.imageId;
+    memeOut.text = obj.text;
+    memeOut.fontSize = obj.fontSize;
+    memeOut.fontWeight = obj.fontWeight;
+    memeOut.color = obj.color;
+    memeOut.italic = obj.italic;
+    memeOut.underline = obj.underline;
+    return memeOut;
+  }
+  /**
+   * enregistrement PUT/POST en fonction de l'id
+   * @param {Function} callback execution apres enregistrement
+   */
+  save(callback) {
+    fetch(`${REST_ADR}/memes${undefined !== this.#id ? "/" + this.#id : ""}`, {
+      method: undefined !== this.#id ? "PUT" : "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: this.json(),
+    })
+      .then(
+        (f) => f.json(),
+        (f) => {
+          console.error("err de sauvgarde du meme", f);
+          return {};
+        }
+      )
+      .then((o) => {
+        this.#id = o.id;
+        if (callback) {
+          callback(this);
+        }
+      });
+  }
 }
 
-class MemeImage extends Meme {
+export class MemeImage extends Meme {
   #image;
   constructor(jsonStr) {
     super(jsonStr);
@@ -169,21 +211,40 @@ class MemeImage extends Meme {
     this.imageId = img.id;
     this.#image = img;
   }
-  json(){
-      let outJson=super.json();
-      const o=JSON.parse(outJson);
-      o.extended=true;
-      return JSON.stringify(o);
+  json() {
+    let outJson = super.json();
+    const o = JSON.parse(outJson);
+    o.extended = true;
+    return JSON.stringify(o);
+  }
+}
+
+export class MemeArray extends Array {
+  push(memeIn) {
+    if (memeIn instanceof MemeImage) {
+      super.push(memeIn);
+    }
+  }
+  load() {
+    return fetch(`${REST_ADR}/memes`).then((f) => f.json());
+    //   .then((a) => {
+    //     a.map((e, i) => {
+    //       this.push(Meme.newFormJsonObject(e));
+    //     });
+    //   });
   }
 }
 //const img = new Image();
 //const loadedImg = new Image({ id: 0, url: "/img" });
 // console.log(img, loadedImg);
 // console.log(JSON.stringify(loadedImg));
- const meme = new MemeImage('{"id":0,"text":"Hello","x":0,"y":0}');
- meme.image ={id:0,url:'/'};
- console.log(meme.json(),meme);
-
+// const meme = new MemeImage('{"text":"Hello","x":0,"y":0}');
+// meme.image = { id: 0, url: "/" };
+// meme.save();
+//const am = new MemeArray();
+//am.load();
+//console.log(am);
+//  console.log(meme.json(),meme);
 /*console.log(meme);*/
 /*meme.#timestamp=new Date();
 console.log(meme,meme.#timestamp,meme.text);
