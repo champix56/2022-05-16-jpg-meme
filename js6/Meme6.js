@@ -98,16 +98,20 @@ class Meme {
     if (newVal instanceof Date) this.#timestamp = newVal;
     else this.#timestamp = new Date();
   }
-  constructor() {
-    this.#text = "";
-    this.#dimension = { x: 0, y: 10 };
-    this.#fontSize = 10;
-    this.#fontWeight = "900";
-    this.#underline = true;
-    this.#italic = false;
-    this.#color = "#ACACAC";
-    this.#imageId = 0;
-    this.#timestamp = new Date();
+  constructor(jsonStr) {
+    if (undefined !== jsonStr && typeof jsonStr === "string") {
+      this.#setFormJson(jsonStr);
+    } else {
+      this.#text = "";
+      this.#dimension = { x: 0, y: 10 };
+      this.#fontSize = 10;
+      this.#fontWeight = "900";
+      this.#underline = true;
+      this.#italic = false;
+      this.#color = "#ACACAC";
+      this.#imageId = 0;
+      this.#timestamp = new Date();
+    }
   }
   clear() {
     this.text = "";
@@ -119,6 +123,33 @@ class Meme {
     this.color = "#000000";
     this.imageId = 0;
     this.#timestamp = new Date();
+  }
+  json() {
+    return JSON.stringify({
+      id: this.id,
+      imageId: this.imageId,
+      underline: this.underline,
+      italic: this.italic,
+      fontWeight: this.fontWeight,
+      fontSize: this.fontSize,
+      x: this.dimension.x,
+      y: this.dimension.y,
+      text: this.text,
+      color: this.color,
+    });
+  }
+  #setFormJson(jsonStr) {
+    const o = JSON.parse(jsonStr);
+    this.id = o.id;
+    this.x = o.x;
+    this.y = o.y;
+    this.imageId = o.imageId;
+    this.text = o.text;
+    this.fontSize = o.fontSize;
+    this.fontWeight = o.fontWeight;
+    this.color = o.color;
+    this.italic = o.italic;
+    this.underline = o.underline;
   }
 }
 class Image {
