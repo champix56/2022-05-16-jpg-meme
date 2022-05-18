@@ -37,6 +37,7 @@ export class ArrayImages extends Array {
     return fetch(`${REST_ADR}/images`)
       .then((f) => f.json())
       .then((a) => {
+        this.splice(0);
         a.map((e) => {
           this.push(new Image(e));
         });
