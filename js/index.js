@@ -88,11 +88,13 @@ function renderSvg(argsCaller, meme) {
   var img = images.find(function (elemImg) {
     return elemImg.id === meme.imageId;
   });
-  nodeSvg.getAttributeNode("viewBox").value = "0 0 " + img.w + " " + img.h;
+    //   nodeSvg.getAttributeNode("viewBox").value = "0 0 " + img.w + " " + img.h;  
+  nodeSvg.getAttributeNode("viewBox").value = `0 0 ${img?img.w:'1000'} ${img?img.h:'1000'}`;  
   /*image*/
   var image = nodeSvg.querySelector("image");
-  image.getAttributeNodeNS("http://www.w3.org/1999/xlink", "href").value =
-    img.url;
+  image.getAttributeNodeNS("http://www.w3.org/1999/xlink", "href").value =img?
+    img.url:
+    '';
   /*text*/
   var text = nodeSvg.querySelector("text");
   // recuperation d'un objet attribut
