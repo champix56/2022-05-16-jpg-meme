@@ -1,3 +1,5 @@
+import { Image } from "./Image.js";
+
 class Meme {
   #id;
   #text;
@@ -112,6 +114,7 @@ class Meme {
       this.#imageId = 0;
       this.#timestamp = new Date();
     }
+    this.#timestamp = new Date();
   }
   clear() {
     this.text = "";
@@ -132,15 +135,16 @@ class Meme {
       italic: this.italic,
       fontWeight: this.fontWeight,
       fontSize: this.fontSize,
-      x: this.dimension.x,
-      y: this.dimension.y,
+      x: this.x,
+      y: this.y,
       text: this.text,
       color: this.color,
     });
   }
   #setFormJson(jsonStr) {
     const o = JSON.parse(jsonStr);
-    this.id = o.id;
+    this.#id = o.id;
+    this.#dimension={x:0,y:0};
     this.x = o.x;
     this.y = o.y;
     this.imageId = o.imageId;
@@ -152,46 +156,33 @@ class Meme {
     this.underline = o.underline;
   }
 }
-class Image {
-  #_id;
-  #_w;
-  #_h;
-  #_url;
-  #_titre;
-  constructor(objFromJSON) {
-    if (typeof objFromJSON === "object") {
-      this.#_h = objFromJSON.h;
-      this.#_w = objFromJSON.w;
-      this.#_url = objFromJSON.url;
-      this.#_titre = objFromJSON.titre;
-      this.#_id = objFromJSON.id;
-    }
+
+class MemeImage extends Meme {
+  #image;
+  constructor(jsonStr) {
+    super(jsonStr);
   }
-  get id() {
-    return this.#_id;
+  get image() {
+    return this.#image;
   }
-  get titre() {
-    return this.#_titre;
+  set image(img) {
+    this.imageId = img.id;
+    this.#image = img;
   }
-  get h() {
-    return this.#_h;
-  }
-  get w() {
-    return this.#_w;
-  }
-  get url() {
-    return this.#_url;
+  json(){
+      let outJson=super.json();
+      const o=JSON.parse(outJson);
+      o.extended=true;
+      return JSON.stringify(o);
   }
 }
-const img = new Image();
-const loadedImg = new Image({ id: 0, url: "/img" });
-console.log(img, loadedImg);
-console.log(JSON.stringify(loadedImg));
-const meme = new Meme();
-meme.color = "#ABCEF0";
-// console.log(meme);
-meme.color = "#ZE";
-// console.log(meme);
+//const img = new Image();
+//const loadedImg = new Image({ id: 0, url: "/img" });
+// console.log(img, loadedImg);
+// console.log(JSON.stringify(loadedImg));
+ const meme = new MemeImage('{"id":0,"text":"Hello","x":0,"y":0}');
+ meme.image ={id:0,url:'/'};
+ console.log(meme.json(),meme);
 
 /*console.log(meme);*/
 /*meme.#timestamp=new Date();
