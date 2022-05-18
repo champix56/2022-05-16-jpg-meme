@@ -10,6 +10,8 @@ function initJs() {
   meme = new Meme(renderSvg, saveMeme);
   nodeSvg = document.querySelector("svg");
   addFormUpdateEvent(meme);
+  refreshForm(meme);
+  meme.render(nodeSvg);
 }
 document.addEventListener("DOMContentLoaded", initJs);
 /**
@@ -116,6 +118,23 @@ function renderSvg(argsCaller, meme) {
   text.innerHTML = meme.text;
 }
 /**
+ * refresh du form avec les infos du meme
+ * @param {Meme} meme meme a afficher dans le form
+ */
+function refreshForm(meme){
+    var f = document.forms["meme-editor"];
+    f["text"].value=meme.text;
+    f["color"].value=meme.color;
+    f["image"].value=meme.imageId;
+    f["x"].value=meme.dimension.x;
+    f["y"].value=meme.dimension.y;
+    f["weight"].value=meme.fontWeight;
+    f["size"].value=meme.fontSize;
+    f["underline"].checked=meme.underline;
+    f["italic"].checked=meme.italic;  
+    
+}
+/**
  * fonction d'ajout des event de changements du formulaire
  * @param {Meme} meme
  */
@@ -129,9 +148,10 @@ function addFormUpdateEvent(meme) {
     f.reset();
   });
   f.addEventListener('reset',function(evt){
-      
+    evt.preventDefault();
     meme.clear();
     meme.render(nodeSvg);
+    refreshForm(meme);
   })
   f["text"].addEventListener("change", function (evt) {
     meme.text = evt.target.value;
