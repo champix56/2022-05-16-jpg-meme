@@ -1,0 +1,86 @@
+<div id="viewer">
+    <svg
+      viewBox="0 0 704 396"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <image x="0" y="0" xlink:href="/img/meme/futurama.webp" />
+      <text
+        x="300"
+        y="50"
+        fill="aquamarine"
+        font-size="45"
+        text-decoration="underline"
+        font-style="italic"
+      >
+        Demat breizh
+      </text>
+    </svg>
+  </div>
+  <div id="editor">
+    <form name="meme-editor">
+      <h2>Edition</h2>
+      <label for="meme-image"><h3>Image</h3></label>
+      <div style="text-align: center">
+        <select id="meme-image" name="image"></select>
+      </div>
+      <hr />
+      <label for="meme-text"><h3>Texte</h3></label><br />
+      <input type="text" id="meme-text" name="text" />
+      <hr />
+      <h3>Position</h3>
+      <div class="col-2">
+        <div>
+          <label for="meme-x">X</label><br />
+          <input type="number" id="meme-x" name="x" />
+        </div>
+        <div>
+          <label for="meme-y">Y</label><br />
+          <input type="number" id="meme-y" name="y" />
+        </div>
+      </div>
+      <hr />
+      <h3>Style</h3>
+      <div class="center-big">
+        <label for="meme-color">Couleur</label><br />
+        <input type="color" id="meme-color" name="color" />
+      </div>
+      <div class="col-2">
+        <div>
+          <label for="meme-size">font-size</label><br />
+          <input min="1" type="number" id="meme-size" name="size" />
+        </div>
+        <div>
+          <label for="meme-weight">font-weight</label><br />
+          <input
+            min="100"
+            max="900"
+            step="100"
+            type="number"
+            id="meme-weight"
+            name="weight"
+          />
+        </div>
+      </div>
+      <div class="col-2">
+        <div>
+          <label for="meme-italic">Italic</label><br />
+          <input name="italic" type="checkbox" id="meme-italic" />
+        </div>
+        <div>
+          <label for="meme-underline">Underline</label><br />
+          <input name="underline" type="checkbox" id="meme-underline" />
+        </div>
+      </div>
+      <hr />
+      <div class="col-2">
+        <div>
+          <button type="reset" class="btn btn-warning">reset</button>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">save</button>
+        </div>
+      </div>
+    </form>
+  </div>
