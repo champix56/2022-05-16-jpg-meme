@@ -8,6 +8,7 @@ class App {
   #currenManager;
   constructor() {
     this.#routes = Routes.routes;
+    console.log(ressources);
   }
   mountRouteComponent() {
     const currentClass = this.#routes.find(
@@ -18,6 +19,19 @@ class App {
   }
   loadInitial() {
     document.addEventListener("DOMContentLoaded", (evt) => {
+
+        document.querySelector('#a-editor').addEventListener('click',(evt)=>{
+            evt.preventDefault();
+            window.history.pushState(undefined,'','/editor');
+            this.mountRouteComponent();
+        })
+        document.querySelector('#a-thumbnail').addEventListener('click',(evt)=>{
+            evt.preventDefault();
+            window.history.pushState(undefined,'','/thumbnail');
+            this.mountRouteComponent();
+        })
+
+
       const prImages = ressources.images.load();
       const prMemes = ressources.memes.load();
       const syncPromise = Promise.all([prImages, prMemes]);
