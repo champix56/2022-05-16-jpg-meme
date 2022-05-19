@@ -11,6 +11,8 @@ export class MemeThumbnailDOM {
     this.#svgBase = document.createElement("div");
     this.#domNode = document.createElement("div");
     this.#domNode.id = "wrapper";
+    console.log(ressources);
+
   }
 
   get domNode() {

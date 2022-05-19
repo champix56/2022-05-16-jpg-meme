@@ -29,11 +29,12 @@ export default class MemeGenDOM extends MemeGenerator {
     this.form = form;*/
     this.#editorNode = document.createElement("div");
     this.#editorNode.id = "wrapper";
+    console.log(ressources);
+
   }
 
   renderCurrent() {
       this.current.render(this.#svgNode)
-   
   }
   initFormEvents() {
     var f = this.#form;
