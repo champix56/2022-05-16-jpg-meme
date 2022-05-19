@@ -1,1 +1,0 @@
-import {memeGenerator} from './MemeHandler.js'
