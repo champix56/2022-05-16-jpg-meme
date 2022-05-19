@@ -4,7 +4,8 @@
   "description": "Projet de formation",
   "main": "index.js",
   "scripts": {
-    "start": "npm run http | npm run json",
+    "start": "npm run http | npm run json ",
+    "tsc": "tsc --watch",
     "http": "lite-server",
     "json": "json-server -p 5679 db/db.json"
   },

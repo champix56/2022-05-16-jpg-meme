@@ -17,11 +17,11 @@ header {
 /* 
     section du wrapper 
 */
-#wrapper {
+#editor {
   height: calc(90vh - 50px);
   display: flex;
 }
-#wrapper > div:nth-child(1) {
+#editor > div:nth-child(1) {
   flex-grow: 1;
 }
 /* 

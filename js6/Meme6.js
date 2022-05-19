@@ -219,48 +219,52 @@ export class MemeImage extends Meme {
     return JSON.stringify(o);
   }
 }
-export class MemeImageDOM extends MemeImage{
-  constructor(jsonStr){
-    super(jsonStr)
+export class MemeImageDOM extends Meme {
+  constructor(obj) {
+    super();
+    if (obj instanceof Meme) {
+      obj && Object.assign(this, obj);
+    }
   }
   /**
- * Fonction de render svg d'un meme
- * @param {array} argsCaller tableaux des agrs fournit par le parent
- * @param {Meme} meme instance du meme afficher
- */
- renderSvg(nodeSvg) {
-  
-  var img = ressources.images.find(function (elemImg) {
-    return elemImg.id === this.imageId;
-  });
-    //   nodeSvg.getAttributeNode("viewBox").value = "0 0 " + img.w + " " + img.h;  
-  nodeSvg.getAttributeNode("viewBox").value = `0 0 ${img?img.w:'1000'} ${img?img.h:'1000'}`;  
-  /*image*/
-  var image = nodeSvg.querySelector("image");
-  image.getAttributeNodeNS("http://www.w3.org/1999/xlink", "href").value =img?
-    img.url:
-    '';
-  /*text*/
-  var text = nodeSvg.querySelector("text");
-  // recuperation d'un objet attribut
-  text.getAttributeNode("x").value = this.x;
-  text.getAttributeNode("y").value = this.y;
-  text.getAttributeNode("text-decoration").value = this.underline
-    ? "underline"
-    : "none";
-  //moddif de la composante de style css en igne de la balise
-  text.style.fontWeight = this.fontWeight;
-  //modif direct de la value d'un attribut existant
-  text.setAttribute("fill", this.color);
-  text.setAttribute("font-style", this.italic ? "italic" : "normal");
-  text.setAttribute("font-size", this.fontSize);
-  text.innerHTML = this.text;
-}
+   * Fonction de render svg d'un meme
+   * @param {array} argsCaller tableaux des agrs fournit par le parent
+   * @param {Meme} meme instance du meme afficher
+   */
+  render(nodeSvg) {
+    var img = ressources.images.find( (elemImg)=> {
+      return elemImg.id === this.imageId;
+    });
+    //   nodeSvg.getAttributeNode("viewBox").value = "0 0 " + img.w + " " + img.h;
+    nodeSvg.getAttributeNode("viewBox").value = `0 0 ${img ? img.w : "1000"} ${
+      img ? img.h : "1000"
+    }`;
+    /*image*/
+    var image = nodeSvg.querySelector("image");
+    image.getAttributeNodeNS("http://www.w3.org/1999/xlink", "href").value = img
+      ? img.url
+      : "";
+    /*text*/
+    var text = nodeSvg.querySelector("text");
+    // recuperation d'un objet attribut
+    text.getAttributeNode("x").value = this.x;
+    text.getAttributeNode("y").value = this.y;
+    text.getAttributeNode("text-decoration").value = this.underline
+      ? "underline"
+      : "none";
+    //moddif de la composante de style css en igne de la balise
+    text.style.fontWeight = this.fontWeight;
+    //modif direct de la value d'un attribut existant
+    text.setAttribute("fill", this.color);
+    text.setAttribute("font-style", this.italic ? "italic" : "normal");
+    text.setAttribute("font-size", this.fontSize);
+    text.innerHTML = this.text;
+  }
 }
 
 export class MemeArray extends Array {
   push(memeIn) {
-    if (memeIn instanceof MemeImage||memeIn instanceof Meme) {
+    if (memeIn instanceof MemeImage || memeIn instanceof Meme) {
       super.push(memeIn);
     }
   }
@@ -268,4 +272,3 @@ export class MemeArray extends Array {
     return fetch(`${REST_ADR}/memes`).then((f) => f.json());
   }
 }
-
