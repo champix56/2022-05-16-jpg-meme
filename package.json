@@ -4,7 +4,7 @@
   "description": "Projet de formation",
   "main": "main-electron.js",
   "scripts": {
-    "startelectron": "electron",
+    "startelectron": "electron ./",
     "start": "npm run http | npm run json",
     "http": "lite-server",
     "json": "json-server -p 5679 db/db.json"
