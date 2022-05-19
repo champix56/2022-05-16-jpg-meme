@@ -2,8 +2,8 @@ export class Thumbnail {
   #templateUrl = "/Views/thumbnail.html";
   #rootNode = document.createElement("div");
   constructor() {}
-  get rootNode() {
-    if (!this.#rootNode.hasChildNodes) {
+  get nodeDom() {
+    if (this.#rootNode.childElementCount===0) {
       this.#initNode();
     }
     return this.#rootNode;
@@ -19,8 +19,8 @@ export class Thumbnail {
 export class Home {
   #rootNode = document.createElement("div");
   constructor() {}
-  get rootNode() {
-    if (!this.#rootNode.hasChildNodes) {
+  get nodeDom() {
+    if (this.#rootNode.childElementCount===0) {
       this.#initNode();
     }
     return this.#rootNode;

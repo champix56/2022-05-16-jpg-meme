@@ -3,16 +3,33 @@ import IMeme from "./interfaces/meme.js";
 import { MemeArray, MemeImage } from "./Meme6.js";
 import { ArrayImages, Image } from "./Image.js";
 import { MemeGenratorDOM } from "./MemeHandler.js";
-// import {memeGenerator} from './MemeHandler.js';
+import { Home, Thumbnail } from "./thumbnail.js";
 class App {
   #wrapperDom: HTMLElement | null = null;
-  #memeHandler: MemeGenratorDOM;
+  #memeHandler: any;
   constructor() {
-    this.#memeHandler = new MemeGenratorDOM();
+    this.#memeHandler = undefined; //new MemeGenratorDOM();
     document.addEventListener("DOMContentLoaded", (evt: Event) => {
       this.#wrapperDom = document.querySelector("#wrapper");
       this.initLoading();
+      for (const route of routes.routes) {
+        document
+          .querySelector('a[href="' + route.path + '"]')
+          ?.addEventListener("click", (evt) => {
+            evt.preventDefault();
+            this.#mountView(route);
+          });
+      }
     });
+  }
+  #mountView(route: { path: string; manager?: any }) {
+    history.pushState(undefined, "", route.path);
+    const manager = routes.route(route.path)?.manager;
+    this.#memeHandler = new manager();
+    if (this.#wrapperDom) this.#wrapperDom.innerHTML = "";
+    console.log(this.#wrapperDom);
+    this.#wrapperDom?.append(this.#memeHandler.nodeDom);
+    console.log(this.#wrapperDom?.children);
   }
   initLoading(): Promise<[ArrayImages, MemeArray] | string> {
     const prImages = ressources.images.load();
@@ -41,16 +58,34 @@ class App {
         console.trace(this);
       });
       console.log(ressources);
-      
-      if (this.#wrapperDom) {
-        for (const child of this.#wrapperDom.children) {
-          child.remove();
-        }
-        this.#wrapperDom.append(this.#memeHandler.nodeDom);
-      }
 
+      // if (this.#wrapperDom) {
+      //   for (const child of this.#wrapperDom.children) {
+      //     child.remove();
+      //   }
+      //   this.#wrapperDom.append(this.#memeHandler.nodeDom);
+      // }
+      const r = routes.route(location.pathname);
+      if (r) {
+        this.#mountView(r);
+      }
       return [ressources.images, ressources.memes];
     });
   }
 }
+class Route {
+  #route: Array<{ path: string; manager?: any }> = [];
+  constructor() {
+    this.#route.push({ path: "/", manager: Home });
+    this.#route.push({ path: "/editor", manager: MemeGenratorDOM });
+    this.#route.push({ path: "/thumbnail", manager: Thumbnail });
+  }
+  get routes() {
+    return this.#route;
+  }
+  route(path: string): { path: string; manager?: any } | undefined {
+    return this.#route.find((e) => e.path === path);
+  }
+}
+const routes = new Route();
 const app = new App();
