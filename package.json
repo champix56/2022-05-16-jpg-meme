@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run http | npm run json",
     "http": "lite-server",
-    "json":"json-server -p 5679 db/db.json"
+    "json": "json-server -p 5679 db/db.json"
   },
   "dependencies": {
     "bootstrap": "^3.4.1",
@@ -14,7 +14,8 @@
   },
   "devDependencies": {
     "json-server": "^0.17.0",
-    "lite-server": "2.6.1"
+    "lite-server": "2.6.1",
+    "typescript": "^4.6.4"
   },
   "repository": {
     "type": "git",
